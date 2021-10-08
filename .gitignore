@@ -21,4 +21,5 @@ yarn-error.log*
 *.sln
 *.sw?
 *.iml
+*.log
 **/target
