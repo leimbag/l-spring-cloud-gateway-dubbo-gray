@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://dubbo.apache.org/schema/dubbo
+        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- Application name -->
+    <dubbo:application name="${dubbo.application.name}">
+        <dubbo:parameter key="qos.enable" value="false"/>
+    </dubbo:application>
+
+    <!-- registry address, used for service to register itself -->
+    <dubbo:registry protocol="${dubbo.registry.protocol}" address="${dubbo.registry.address}" />
+    <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}"/>
+
+    <dubbo:monitor/>
+
+    <dubbo:provider timeout="60000" />
+
+    <dubbo:consumer check="false" timeout="60000"/>
+
+    <dubbo:reference id="userService" interface="com.leimbag.dubbo.user.service.UserService" />
+    <dubbo:reference id="walletService" interface="com.leimbag.dubbo.wallet.service.WalletService" />
+
+
+</beans>

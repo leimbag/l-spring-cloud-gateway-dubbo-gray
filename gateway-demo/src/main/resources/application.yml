@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 10
+            key-resolver: "#{@ipKeyResolver}"
+      routes:
+        - id: gwapi
+          uri: lb://web-demo
+          predicates:
+            - Path=/api/**
+          filters:
+            - StripPrefix=1

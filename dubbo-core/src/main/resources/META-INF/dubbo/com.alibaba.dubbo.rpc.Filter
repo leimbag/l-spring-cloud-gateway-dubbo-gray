@@ -1,0 +1,2 @@
+grayHeaderConsumerFilter=com.leimbag.dubbo.core.filter.GrayHeaderConsumerFilter
+grayHeaderProviderFilter=com.leimbag.dubbo.core.filter.GrayHeaderProviderFilter
