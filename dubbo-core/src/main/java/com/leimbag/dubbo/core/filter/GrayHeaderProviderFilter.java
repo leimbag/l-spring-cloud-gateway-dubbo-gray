@@ -7,6 +7,7 @@ import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.env.Environment;
 
 import java.util.Objects;
 
@@ -17,6 +18,16 @@ import java.util.Objects;
 @Activate(group = {CommonConstants.PROVIDER}, order = -30000)
 public class GrayHeaderProviderFilter implements Filter {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private Environment environment;
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+    }
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
@@ -37,6 +48,10 @@ public class GrayHeaderProviderFilter implements Filter {
                     grayHeader, invocation.getServiceName(), invocation.getMethodName());
             RpcContext.getContext().setAttachment(ServiceConstant.TAG_GRAY, grayHeader);
             RpcContext.getContext().setAttachment(CommonConstants.TAG_KEY, grayHeader);
+            String forceUseGrayTag = environment.getProperty(ServiceConstant.DUBBO_FORCE_GRAY_TAG_KEY);
+            if (ServiceConstant.FORCE_USE_TAG_VALUE.equals(forceUseGrayTag)) {
+                RpcContext.getContext().setAttachment(Constants.FORCE_USE_TAG, ServiceConstant.FORCE_USE_TAG_VALUE);
+            }
         }
 
         try {
