@@ -31,11 +31,10 @@ public class GrayHeaderProviderFilter implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        logger.info("[服务提供者]灰度头过滤, attHeader={}, tagHeader={}, holderHeader={}, ConsumerSide={}, ProviderSide={}, interface={}, serviceName={}, methodName={}",
+        logger.info("[服务提供者]灰度头过滤, attHeader={}, tagHeader={}, holderHeader={}, interface={}, serviceName={}, methodName={}",
                 RpcContext.getContext().getAttachment(ServiceConstant.TAG_GRAY),
                 RpcContext.getContext().getAttachment(CommonConstants.TAG_KEY),
                 GrayHeaderHolder.getGrayHeader(),
-                RpcContext.getContext().isConsumerSide(), RpcContext.getContext().isProviderSide(),
                 invoker.getInterface().getName(), invocation.getServiceName(), invocation.getMethodName());
 
         // 读取dubbo.tag会出现null，应该是传递中被销毁，使用自定义灰度标签
@@ -57,7 +56,6 @@ public class GrayHeaderProviderFilter implements Filter {
         try {
             return invoker.invoke(invocation);
         } finally {
-            logger.info("finally执行,ConsumerSide={}, ProviderSide={}", RpcContext.getContext().isConsumerSide(), RpcContext.getContext().isProviderSide());
             logger.info("清除灰度头，grayHeader={}", GrayHeaderHolder.getGrayHeader());
             GrayHeaderHolder.removeGrayHeader();
         }

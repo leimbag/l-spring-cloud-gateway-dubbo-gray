@@ -34,4 +34,11 @@ public class UserController {
         logger.info("查询uid={}的钱包余额, result={}", uid, result);
         return result;
     }
+
+    @RequestMapping("/getUserNameByShutdown")
+    public String getUserNameByShutdown(Long uid) {
+        String result = userService.getUserNameByShutdown(uid);
+        logger.info("查询uid={}的用户名, result={}", uid, result);
+        return result;
+    }
 }

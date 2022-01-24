@@ -2,14 +2,20 @@ package com.leimbag.dubbo.user.gray.service.impl;
 
 import com.leimbag.dubbo.user.service.UserService;
 import com.leimbag.dubbo.wallet.service.WalletService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author leimbag
  */
 @Service("userService")
 public class UserServiceImpl implements UserService {
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private WalletService walletService;
 
@@ -21,5 +27,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getWalletBalance(Long uid) {
         return walletService.getWallet(uid);
+    }
+
+    @Override
+    public String getUserNameByShutdown(Long uid) {
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage(), e);
+        }
+        logger.info("等待十秒, uid={}", uid);
+        return "TestUser:" + uid;
     }
 }

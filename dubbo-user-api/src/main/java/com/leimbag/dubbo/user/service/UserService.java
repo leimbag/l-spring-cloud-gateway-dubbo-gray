@@ -7,4 +7,7 @@ public interface UserService {
     String getUserName(Long uid);
 
     String getWalletBalance(Long uid);
+
+    String getUserNameByShutdown(Long uid);
+
 }

@@ -89,3 +89,30 @@ dubbo.force.gray.tag=true
 ### 部署策略
 
 一般线上提供2套环境，一套正式环境，一套灰度相关服务，哪些服务需要灰度发布，独立发布对应的灰度服务到线上，统一线上的灰度标签值，保证灰度测试的准确路由即可。
+
+### 优雅停机
+
+nacos增加以下配置
+
+```
+# 优雅停机
+# Enable gracefule shutdown
+server.shutdown=graceful
+# Allow grace timeout period
+spring.lifecycle.timeout-per-shutdown-phase=20s
+# Force enable health probes. Would be enabled on kubernetes platform by default
+management.health.probes.enabled=true
+# dubbo.properties
+dubbo.service.shutdown.wait=15000
+```
+
+测试方法
+
+1. 分别启动 UserService，WalletService，web-demo服务
+2. 访问地址：http://localhost:19830/user/getBalance?uid=5，获得响应结果Wallet:5
+3. 再次访问http://localhost:19830/user/getBalance?uid=4，同时直接停掉wallet-service服务
+4. 直接获得请求结果，wallet：4， wallet-service服务停止下线
+
+问题：
+1. dubbo在3.0.5版本会出现当停掉wallet-service后，每隔60秒重连wallet-service，无限重连
+2. dubbo在2.7.15无上述问题

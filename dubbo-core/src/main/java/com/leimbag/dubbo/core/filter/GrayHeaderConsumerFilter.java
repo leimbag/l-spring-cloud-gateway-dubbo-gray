@@ -30,11 +30,10 @@ public class GrayHeaderConsumerFilter implements Filter {
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
-        logger.info("[服务消费者]灰度头过滤, attHeader={}, tagHeader={}, holderHeader={}, ConsumerSide={}, ProviderSide={}, interface={}, serviceName={}, methodName={}",
+        logger.info("[服务消费者]灰度头过滤, attHeader={}, tagHeader={}, holderHeader={}, interface={}, serviceName={}, methodName={}",
                 RpcContext.getContext().getAttachment(ServiceConstant.TAG_GRAY),
                 RpcContext.getContext().getAttachment(CommonConstants.TAG_KEY),
                 GrayHeaderHolder.getGrayHeader(),
-                RpcContext.getContext().isConsumerSide(), RpcContext.getContext().isProviderSide(),
                 invoker.getInterface().getName(), invocation.getServiceName(), invocation.getMethodName());
         String grayHeader = GrayHeaderHolder.getGrayHeader();
         if (Objects.nonNull(grayHeader)) {
