@@ -27,7 +27,7 @@
         <java.version>1.8</java.version>
         <spring.boot.version>2.5.8</spring.boot.version>
         <spring.cloud.dependencies.version>2020.0.5</spring.cloud.dependencies.version>
-        <dubbo.version>2.7.15</dubbo.version>
+        <dubbo.version>3.0.5</dubbo.version>
         <alibaba.version>2.2.7.RELEASE</alibaba.version>
         <alibaba.nacos.version>2.0.3</alibaba.nacos.version>
         <jackson.version>2.12.6</jackson.version>
