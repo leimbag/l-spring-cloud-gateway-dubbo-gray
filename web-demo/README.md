@@ -50,3 +50,7 @@ log4j2.yml  json日志格式配置
 ```
 
 $${ctx:MYTID}  如果没有数据写入到MDC的上下文中，则原文输出，如有有值，输出上下文中的MYTID变量值
+
+参考官方JSON Layout配置
+
+参考地址 https://logging.apache.org/log4j/2.x/manual/layouts.html
