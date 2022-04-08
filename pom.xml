@@ -21,6 +21,8 @@
         <module>dubbo-user-service-gray</module>
         <module>dubbo-wallet-service-gray</module>
         <module>gateway-web-spring-boot-starter</module>
+        <module>rabbitmq-provider-demo</module>
+        <module>rabbitmq-consumer-demo</module>
     </modules>
 
     <properties>

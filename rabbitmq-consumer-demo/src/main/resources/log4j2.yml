@@ -1,0 +1,83 @@
+Configuration:
+  status: info
+
+  Properties:
+    Property:
+      - name: PROJECT
+        value: ${project.artifactId}
+      - name: LOGGER_FORMAT
+        value: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%X{MYTID}] %highlight{[%p] [%traceId] (%t) %c{1.}.%M:%L} - %m%n"
+      - name: LOG_FILE_PATH
+        value: /opt/logs/${project.artifactId}
+  Appenders:
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: ${LOGGER_FORMAT}
+
+    RollingRandomAccessFile:
+      - name: APP_INFO
+        ignoreExceptions: false
+        fileName: ${LOG_FILE_PATH}/service.log
+        filePattern: ${LOG_FILE_PATH}/service.log.%d{yyyyMMdd}
+        PatternLayout:
+          pattern: ${LOGGER_FORMAT}
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+
+      - name: APP_JSON
+        ignoreExceptions: false
+        fileName: ${LOG_FILE_PATH}/service.log.json
+        filePattern: ${LOG_FILE_PATH}/service.log.json.%d{yyyyMMdd}
+        JsonLayout:
+          compact: true
+          eventEol: true
+          stacktraceAsString: true
+          objectMessageAsJsonObject: true
+          KeyValuePair:
+            - key: timestamp
+              value: $${date:yyyy-MM-dd-HH:mm:ss.SSSSS}
+            - key: project
+              value: ${PROJECT}
+            - key: mytid
+              value: $${ctx:MYTID}
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+        DefaultRolloverStrategy:
+          Delete:
+            basePath: ${LOG_FILE_PATH}
+            maxDepth: 1
+            IfFileName:
+              glob: service.log.json.*
+            IfLastModified:
+              age: 3d
+  Loggers:
+    Root:
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: APP_INFO
+          level: info
+        - ref: APP_JSON
+          level: info
+
+    Logger:
+      - name: com.leimbag
+        level: info
+        AppenderRef:
+          - ref: APP_INFO
+
+      - name: org.springframework
+        level: info
+        AppenderRef:
+          - ref: APP_INFO
+
+      - name: org.apache.dubbo
+        level: info
+        AppenderRef:
+          - ref: APP_INFO
+
