@@ -1,0 +1,4 @@
+#org.springframework.context.ApplicationListener=com.leimbag.dubbo.user.listener.DubboLocalDevEnvListener
+
+org.springframework.boot.env.EnvironmentPostProcessor=com.leimbag.dubbo.user.processor.DubboLocalDevEnvironmentPostProcessor
+org.springframework.context.ApplicationListener=com.leimbag.dubbo.user.processor.DubboLocalDevEnvironmentPostProcessor
