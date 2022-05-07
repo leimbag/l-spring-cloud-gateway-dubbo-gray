@@ -81,3 +81,7 @@ Configuration:
         AppenderRef:
           - ref: APP_INFO
 
+#      - name: com.alibaba.nacos
+#        level: debug
+#        AppenderRef:
+#          - ref: APP_INFO

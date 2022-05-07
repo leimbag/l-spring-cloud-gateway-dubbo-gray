@@ -7,6 +7,14 @@ spring:
             redis-rate-limiter.replenishRate: 1
             redis-rate-limiter.burstCapacity: 10
             key-resolver: "#{@ipKeyResolver}"
+
+        - name: Retry
+          args:
+            retries: 1
+            methods: GET,POST
+            statuses:
+              - BAD_GATEWAY
+
       routes:
         - id: gwapi
           uri: lb://web-demo

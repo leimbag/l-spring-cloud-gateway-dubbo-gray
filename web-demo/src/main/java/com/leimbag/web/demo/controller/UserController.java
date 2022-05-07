@@ -41,4 +41,10 @@ public class UserController {
         logger.info("查询uid={}的用户名, result={}", uid, result);
         return result;
     }
+
+    @RequestMapping("/test")
+    public String test(String name) {
+        logger.info("测试:{}", name);
+        return "Hello " + name;
+    }
 }

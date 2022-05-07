@@ -30,6 +30,7 @@
         <spring.boot.version>2.5.8</spring.boot.version>
         <spring.cloud.dependencies.version>2020.0.5</spring.cloud.dependencies.version>
         <dubbo.version>3.0.5</dubbo.version>
+        <hutool.version>5.7.22</hutool.version>
         <alibaba.version>2.2.7.RELEASE</alibaba.version>
         <alibaba.nacos.version>2.0.3</alibaba.nacos.version>
         <jackson.version>2.12.6</jackson.version>
@@ -154,6 +155,12 @@
                 <groupId>com.leimbag.gray</groupId>
                 <artifactId>gateway-web-spring-boot-starter</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
