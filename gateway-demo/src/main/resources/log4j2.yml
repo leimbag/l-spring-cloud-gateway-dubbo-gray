@@ -56,3 +56,13 @@ Configuration:
 #        AppenderRef:
 #          - ref: APP_INFO
 
+      - name: reactor
+        level: warn
+        AppenderRef:
+          - ref: APP_INFO
+
+      - name: io.netty
+        level: warn
+        AppenderRef:
+          - ref: APP_INFO
+

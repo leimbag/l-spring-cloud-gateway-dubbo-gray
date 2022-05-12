@@ -2,11 +2,11 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - name: RequestRateLimiter
-          args:
-            redis-rate-limiter.replenishRate: 1
-            redis-rate-limiter.burstCapacity: 10
-            key-resolver: "#{@ipKeyResolver}"
+#        - name: RequestRateLimiter
+#          args:
+#            redis-rate-limiter.replenishRate: 1
+#            redis-rate-limiter.burstCapacity: 10
+#            key-resolver: "#{@ipKeyResolver}"
 
         - name: Retry
           args:
@@ -22,3 +22,8 @@ spring:
             - Path=/api/**
           filters:
             - StripPrefix=1
+
+      httpclient:
+        pool:
+          max-idle-time: 10000
+          max-connections: 500

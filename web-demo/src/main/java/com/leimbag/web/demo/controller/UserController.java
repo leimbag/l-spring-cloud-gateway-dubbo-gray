@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author leimbag
  */
@@ -46,5 +48,17 @@ public class UserController {
     public String test(String name) {
         logger.info("测试:{}", name);
         return "Hello " + name;
+    }
+
+    @RequestMapping("/wait")
+    public String wait(String name) {
+        logger.info("测试:{}", name);
+        try {
+            TimeUnit.SECONDS.sleep(30);
+        } catch (InterruptedException e) {
+            logger.error(e.getMessage(), e);
+        }
+        logger.info("wait user: {}", name);
+        return "Wait " + name;
     }
 }

@@ -13,14 +13,19 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 /**
+ * 可以使用生命周期的方式发送实例下线的通知，但是会受到nacos的消息通知的延迟影响，大约500ms
+ *
+ * 也可以通过GracefulShutdownListener的spring事件监听器的方式，在spring关闭前发送实例下线通知，可以增加延迟后续通知时间
+ *
+ * 推荐使用Listener方式，可以通过自定义休眠时间避免nacos通知的延迟
+ *
  * @author leimbag
  */
-@Component
+//@Component
 public class InstanceLifecycle implements ApplicationContextAware, SmartLifecycle {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 

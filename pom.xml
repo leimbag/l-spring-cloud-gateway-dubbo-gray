@@ -37,6 +37,7 @@
         <slf4j.version>1.7.32</slf4j.version>
         <log4j2.version>2.17.0</log4j2.version>
         <spring.context.support.version>1.0.11</spring.context.support.version>
+        <caffeine.version>2.9.3</caffeine.version>
 
         <java.version>1.8</java.version>
         <java.source.version>1.8</java.source.version>
@@ -162,6 +163,12 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+                <version>${caffeine.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
