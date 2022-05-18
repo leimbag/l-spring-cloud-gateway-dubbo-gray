@@ -21,12 +21,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getUserName(Long uid) {
+        logger.info("获取用户名，uid:{}", uid);
         return "TestUser:" + uid;
     }
 
     @Override
+    public String getUserAlias(Long uid) {
+        logger.info("获取用户别名，uid:{}", uid);
+        return "AliasUser:" + uid;
+    }
+
+    @Override
     public String getWalletBalance(Long uid) {
-        return walletService.getWallet(uid);
+        String userAlias = getUserAlias(uid);
+        logger.info("获取用户别名，uid:{}, userAlias={}", uid, userAlias);
+        String wallet = walletService.getWallet(uid);
+        logger.info("获取用户钱包余额：{}", wallet);
+        String walletName = walletService.getWalletName(uid);
+        logger.info("获取用户钱包名称：{}", walletName);
+        return wallet;
     }
 
     @Override

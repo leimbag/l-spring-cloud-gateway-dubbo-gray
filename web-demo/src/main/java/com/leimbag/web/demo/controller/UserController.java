@@ -34,6 +34,8 @@ public class UserController {
         logger.info("查询uid={}的钱包余额, attHeader={}", uid, RpcContext.getContext().getAttachment(ServiceConstant.TAG_GRAY));
         String result = userService.getWalletBalance(uid);
         logger.info("查询uid={}的钱包余额, result={}", uid, result);
+        String userName = userService.getUserName(uid);
+        logger.info("获取uid={}的用户名为{}", uid, userName);
         return result;
     }
 

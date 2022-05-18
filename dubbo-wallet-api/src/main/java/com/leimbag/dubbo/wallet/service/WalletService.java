@@ -5,4 +5,6 @@ package com.leimbag.dubbo.wallet.service;
  */
 public interface WalletService {
     String getWallet(Long uid);
+
+    String getWalletName(Long uid);
 }

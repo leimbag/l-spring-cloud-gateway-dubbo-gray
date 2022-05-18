@@ -6,7 +6,7 @@ Configuration:
       - name: PROJECT
         value: ${project.artifactId}
       - name: LOGGER_FORMAT
-        value: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%X{MYTID}] %highlight{[%p] [%traceId] (%t) %c{1.}.%M:%L} - %m%n"
+        value: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%X{MYTID}] %highlight{[%p] [%traceId] [GID:%X{GID}] (%t) %c{1.}.%M:%L} - %m%n"
       - name: LOG_FILE_PATH
         value: /opt/logs/${project.artifactId}
   Appenders:
@@ -44,6 +44,8 @@ Configuration:
               value: ${PROJECT}
             - key: mytid
               value: $${ctx:MYTID}
+            - key: GID
+              value: $${ctx:GID}
         Policies:
           TimeBasedTriggeringPolicy:
             interval: 1

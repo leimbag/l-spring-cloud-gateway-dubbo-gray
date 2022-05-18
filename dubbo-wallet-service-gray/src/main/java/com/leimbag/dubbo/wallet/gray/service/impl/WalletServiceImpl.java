@@ -11,4 +11,9 @@ public class WalletServiceImpl implements WalletService {
     public String getWallet(Long uid) {
         return "Gray Wallet:" + uid;
     }
+
+    @Override
+    public String getWalletName(Long uid) {
+        return "Gray Wallet Name:" + uid;
+    }
 }

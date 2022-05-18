@@ -1,1 +1,3 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.leimbag.web.core.config.WebGrayConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.leimbag.web.core.config.WebGrayConfig,\
+  com.leimbag.web.core.config.WebTraceConfig

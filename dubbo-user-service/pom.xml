@@ -93,6 +93,10 @@
             <groupId>com.leimbag.gray</groupId>
             <artifactId>dubbo-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.leimbag.gray</groupId>
+            <artifactId>trace-dubbo-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

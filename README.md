@@ -116,3 +116,86 @@ dubbo.service.shutdown.wait=15000
 问题：
 1. dubbo在3.0.5版本会出现当停掉wallet-service后，每隔60秒重连wallet-service，无限重连
 2. dubbo在2.7.15无上述问题
+
+
+
+## 网关链路跟踪
+
+### 相关web组件添加以下依赖
+
+```
+<dependency>
+    <groupId>com.leimbag.gray</groupId>
+    <artifactId>gateway-web-spring-boot-starter</artifactId>
+    <classifier>${branch}</classifier>
+</dependency>
+```
+
+**设置开启trace配置**
+```
+web.trace.interceptor.enable=true
+```
+
+### 相关dubbo服务添加以下依赖
+```
+<dependency>
+    <groupId>com.leimbag.gray</groupId>
+    <artifactId>trace-dubbo-core</artifactId>
+    <classifier>${branch}</classifier>
+</dependency>
+```
+
+目前dubbo依赖，已经添加到 dubbo-suite-base 基础配置中
+
+### 相关日志文件修改
+
+普通日志文件 表达式修改
+```
+%d{yyyy-MM-dd HH:mm:ss,SSS} %highlight{[%p] [%traceId] [GID:%X{GID}] (%t) %c{1.}.%M:%L} - %m%n
+```
+
+json日志文件增加
+```
+    - key: GID
+      value: $${ctx:GID}
+```
+
+完整json日志定义
+```
+      - name: APP_JSON
+        ignoreExceptions: false
+        fileName: ${LOG_FILE_PATH}/service.log.json
+        filePattern: ${LOG_FILE_PATH}/service.log.json.%d{yyyyMMdd}
+        JSONLayout:
+          compact: true
+          eventEol: true
+          stacktraceAsString: true
+          objectMessageAsJsonObject: true
+          KeyValuePair:
+            - key: timestamp
+              value: $${date:yyyy-MM-dd-HH:mm:ss.SSSSS}
+            - key: project
+              value: ${PROJECT}
+            - key: GID
+              value: $${ctx:GID}
+        Policies:
+          TimeBasedTriggeringPolicy:
+            interval: 1
+            modulate: true
+        DefaultRolloverStrategy:
+          Delete:
+            basePath: ${LOG_FILE_PATH}
+            maxDepth: 1
+            IfFileName:
+              glob: service.log.json.*
+            IfLastModified:
+              age: 3d
+```
+
+### 原理
+
+通过网关过滤器增加自定义请求跟踪标识（API-GW-Request-Id），后续的web服务拦截请求，解析自定义跟踪头保存到线程上下文和MDC
+
+利用日志框架的MDC保持并输出跟踪信息到日志中,LOG日志上下文关键字为GID
+
+通过隐式传递方式传递给后续DUBBO服务，实现整个调用链路跟踪

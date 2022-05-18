@@ -25,6 +25,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getUserAlias(Long uid) {
+        return "Gray AliasUser:" + uid;
+    }
+
+    @Override
     public String getWalletBalance(Long uid) {
         return walletService.getWallet(uid);
     }

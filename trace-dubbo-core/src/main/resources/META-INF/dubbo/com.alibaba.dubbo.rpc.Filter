@@ -1,0 +1,2 @@
+traceHeaderConsumerFilter=com.leimbag.trace.dubbo.core.filter.TraceHeaderConsumerFilter
+traceHeaderProviderFilter=com.leimbag.trace.dubbo.core.filter.TraceHeaderProviderFilter
