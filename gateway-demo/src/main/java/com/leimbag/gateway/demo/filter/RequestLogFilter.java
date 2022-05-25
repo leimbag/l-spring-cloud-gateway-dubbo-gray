@@ -4,10 +4,10 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.leimbag.demo.core.util.IdGenerateUtil;
 import com.leimbag.gateway.demo.bean.Log;
 import com.leimbag.gateway.demo.config.GatewayRequestLogProperties;
 import com.leimbag.gateway.demo.constant.HeaderConstant;
-import com.leimbag.gateway.demo.util.GenerateIdUtil;
 import com.leimbag.gateway.demo.util.IpUtil;
 import com.leimbag.gateway.demo.util.LogHelper;
 import io.micrometer.core.instrument.MeterRegistry;
@@ -98,7 +98,7 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
             ServerHttpRequest serverHttpRequest = exchange.getRequest();
             if (StringUtils.isBlank(requestId)) {
                 ServerHttpRequest.Builder requestBuilder = exchange.getRequest().mutate();
-                requestId = GenerateIdUtil.generateId();
+                requestId = IdGenerateUtil.generateId();
                 requestBuilder.header(HeaderConstant.GW_REQUEST_ID, requestId);
                 serverHttpRequest = requestBuilder.build();
             }

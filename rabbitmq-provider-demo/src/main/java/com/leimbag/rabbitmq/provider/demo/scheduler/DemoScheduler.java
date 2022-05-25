@@ -22,7 +22,7 @@ public class DemoScheduler {
     @Qualifier("taskAmqpTemplate")
     protected AmqpTemplate amqpTemplate;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 60000)
     public void run() {
         String message = "demo@" + new Date();
         amqpTemplate.convertAndSend(MessageConstant.EXCHANGE_NAME_DEFAULT, MessageConstant.ROUTING_KEY_DEMO_TEST, message);

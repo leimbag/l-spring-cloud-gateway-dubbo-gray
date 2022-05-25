@@ -40,10 +40,15 @@ public class DemoConsumerJob {
         container.setQueues(queue);
         container.setDefaultRequeueRejected(false);
         container.setAutoStartup(true);
+//        container.setMessageListener(demoMessageListenerAdapter());
         container.setMessageListener(new MessageListenerAdapter(demoTestHandler()));
         return container;
     }
 
+//    @Bean
+//    public MessageListenerAdapter demoMessageListenerAdapter(){
+//        return new MessageListenerAdapter(demoTestHandler());
+//    }
 
     @Bean
     public DemoTestHandler demoTestHandler() {

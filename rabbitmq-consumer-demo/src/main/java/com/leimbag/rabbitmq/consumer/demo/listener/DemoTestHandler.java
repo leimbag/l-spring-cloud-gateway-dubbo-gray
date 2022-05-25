@@ -1,6 +1,7 @@
 package com.leimbag.rabbitmq.consumer.demo.listener;
 
 import com.leimbag.dubbo.user.service.UserService;
+import com.leimbag.rabbitmq.consumer.demo.annotation.TraceableMq;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class DemoTestHandler {
     @Autowired
     protected UserService userService;
 
+    @TraceableMq
     public void handleMessage(String message) {
         logger.info("开始处理消息:{}", message);
         try {
